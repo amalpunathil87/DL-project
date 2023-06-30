@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar Menu for Admin Dashboard | CodingNepal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .sidebar {
+      position: fixed;
+      height: 100%;
+      width: 260px;
+      background: #050e02;
+      padding: 20px 15px 15px 15px;
+      z-index: 99;
+      
+    }
+
+    .logo {
+      font-size: 25px;
+      padding: 0 15px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      /* para-decoration: none; */
+    }
+
+    .menu-content {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      margin-top: 40px;
+      overflow-y: scroll;
+    }
+
+    .menu-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-items {
+      height: 100%;
+      width: 100%;
+      list-style: none;
+      transition: all 0.4s ease;
+    }
+
+    .submenu-active .menu-items {
+      transform: translateX(-56%);
+    }
+
+
+
+
+
+    .menu-title {
+      color: #fff;
+      font-size: 14px;
+      padding: 15px 20px;
+    }
+
+    .item a,
+    .submenu-item {
+      padding: 16px;
+      display: flex;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .item i {
+      font-size: 12px;
+    }
+
+    .item a:hover,
+    .submenu-item:hover,
+    .soil-types:hover,
+    .submenu .menu-title:hover {
+      background: rgba(13, 62, 43, 0.858);
+    }
+
+    .submenu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .soil-types {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+      padding: 16px;
+      display: inline-block;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .submenu {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      right: calc(-100% - 28px);
+      height: calc(100% + 100vh);
+      background: #091805;
+      display: none;
+    }
+
+    .show-submenu~.submenu {
+      display: block;
+    }
+
+    .submenu .menu-title {
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .submenu .menu-title i {
+      margin-right: 10px;
+    }
+    a{
+      align-items:center ;
+      justify-content: space-between;
+    }
+
+    .soil-description {
+      display: none;
+    }
+
+    .navbar,
+    .main {
+      left: 260px;
+      width: calc(100% - 260px);
+      transition: all 0.5s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.close~.navbar,
+    .sidebar.close~.main {
+      left: 0;
+      width: 100%;
+    }
+
+    .navbar {
+      position: fixed;
+      color: rgb(255, 250, 250);
+      padding: 15px 20px;
+      font-size: 25px;
+      background: #0e2207;
+      cursor: pointer;
+      height: 80px;
+      display: flex;
+
+    }
+
+    .navbar #sidebar-close {
+      cursor: pointer;
+    }
+
+    .heading {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .main {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      z-index: 100;
+      /* background: #162739; */
+      background-image: url('/static/image/bg.jpg');
+      background-size: cover;
+
+    }
+
+    .main h1 {
+      color: #11101d;
+      font-size: 40px;
+      para-align: center;
+    }
+
+    /* body {
+    background-image: url('/static/image/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+    h1 {
+      font-weight: bold;
+      color: rgb(250, 250, 246);
+      font-size: 40px;
+      /* padding-left: 450px;
+    position: absolute;
+    display: flex;
+    justify-content: center; */
+
+    }
+
+    h2 {
+      color: aliceblue;
+    }
+
+    p {
+      font-size: 12px;
+      padding: 4%;
+      display: flex;
+      color: #fdfcfc;
+
+    }
+
+    input {
+      font-size: 20px;
+      font-weight: 200;
+      color: rgb(129, 118, 118);
+      font-style: normal;
+    }
+
+    .card {
+      background: rgba(13, 62, 43, 0.858);
+      width: 800px;
+      height: 600px;
+      gap: 40px;
+      padding: 0px 0px 0px 30px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    .card p {
+      font-size: 30px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 24px;
+      cursor: pointer;
+      para-align: center;
+      para-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #12300a;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 9px rgb(78, 59, 73);
+    }
+
+    .button:hover {
+      background-color: #020e04
+    }
+
+    .button:active {
+      background-color: #040f0a;
+      box-shadow: 0 5px rgb(7, 22, 5);
+      transform: translateY(4px);
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h3 {
+      padding-top: 30px;
+      color: #fff;
+      width: 800px;
+      word-wrap: break-word;
+      para-overflow: hidden;
+    }
+
+
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+    }
+    /* .para{
+      padding: 3%;
+    } */
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+</head>
+
+<body>
+  <nav class="sidebar">
+    <a href="#" style="text-decoration: none;" class="logo">Soil Sense</a>
+    <div class="menu-content">
+      <ul class="menu-items">
+        <li class="item">
+          <div class="submenu-item">
+            <span>Soil Type</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Soil Type
+            </div>
+            <li class="item">
+            <li>
+
+          
+              <a href="#" style="text-decoration: none;" class="paraHead">Black Soil <i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Black soil, also known as Regur soil or black cotton soil, is a prominent soil type found in the Indian state of Kerala. It is characterized by its dark color, rich organic content, and high fertility.
+                 The pH content of black soil in Kerala typically ranges from slightly acidic to neutral, with pH values between 6.5 and 7.5.Black soil in Kerala is well-suited for agriculture due to its excellent moisture retention capacity, good drainage, 
+                 and high nutrient-holding capacity. It is particularly suitable for the cultivation of crops such as rice, sugarcane, tobacco, cotton, pulses, and various fruits and vegetables. The soil's high organic matter content helps
+                 in retaining moisture and nutrients, providing optimal conditions for plant growth.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Red Soil <i class="fa-solid fa-chevron-down"></i></a>
+              
+              <P class="para" style="display: none;">Red soil is a common soil type found in Kerala, a state in southern India.
+                 It is characterized by its reddish appearance, which is caused by the high iron oxide content.
+                  The pH content of red soil in Kerala typically ranges from slightly acidic to neutral, with pH values around 5.5 to 7.5.
+                Red soil is well-drained and has moderate fertility. It is suitable for a variety of agricultural crops, including cashews, rubber, coconut, and spices like pepper and cardamom. However, due to its low water-holding capacity, 
+                red soil requires proper irrigation and management practices to optimize crop growth.  
+              In Kerala, red soil is commonly found in regions with hilly terrain, such as the Western Ghats and the Malabar region.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Alluvial Soil <i class="fa-solid fa-chevron-down"></i></a>
+              
+              <P class="para" style="display: none;">Alluvial soil is a type of soil found in Kerala, India. It is formed by the deposition of fine sediments brought by rivers and streams.
+                 Alluvial soil is generally fertile and rich in organic matter, making it suitable for agriculture. In Kerala, alluvial soil is characterized by its neutral to slightly acidic pH content, 
+                 typically ranging from 6 to 7.5. This pH level is conducive for a wide range of crops to grow effectively. The soil texture varies from sandy loam to clay loam, providing good water retention capacity while also allowing proper drainage.
+                The alluvial soil in Kerala is predominantly found in the coastal plains, river valleys, and deltas of major rivers such as the Periyar, Pamba, and Chaliyar. 
+                This type of soil is highly suitable for the cultivation of paddy rice, coconut, banana, vegetables, and various cash crops.
+                 Due to its fertile nature, alluvial soil in Kerala supports a significant portion of the state's agricultural activities.
+                  Farmers in these regions often practice intensive farming and utilize irrigation methods to maximize crop yields. However,
+                   proper soil management practices, including nutrient replenishment and erosion control, are crucial to maintain the long-term productivity and sustainability of alluvial soil in Kerala.</P>
+            </li>
+            <li class="item">
+              
+              <a href="#" style="text-decoration: none;" class="paraHead">Clay Soil<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">
+                Clay soil is a type of soil commonly found in Kerala, a state in India. It is characterized by its
+                 fine texture and high water-holding capacity. The clay particles in this soil are tightly packed,
+                  resulting in poor drainage and a tendency to hold moisture for longer durations. In terms of pH 
+                  content, clay soil in Kerala tends to vary, but it is generally slightly acidic to neutral. The 
+                  pH level can influence the availability of nutrients to plants and affect their growth. Therefore, 
+                  soil testing and appropriate amendments may be necessary to maintain optimal pH levels for plant cultivation in clay soil.
+                  Due to its high moisture retention, clay soil can become compacted and easily waterlogged during heavy rainfall, 
+                  potentially leading to drainage issues and reduced oxygen availability for plant roots. However, clay soil also
+                   has its advantages. It is rich in nutrients and minerals, making it fertile and suitable for various crops and
+                    vegetation once proper management practices are implemented, such as soil amendment, regular aeration, and adequate
+                     water management.Overall, clay soil in Kerala can provide a fertile foundation for plant growth, but it requires
+                      careful management to optimize its characteristics and overcome its challenges, ensuring healthy and thriving vegetation.</P>
+            </li>
+          </ul>
+        </li>
+        <li class="item">
+          <div class="submenu-item">
+            <span>Crop </span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Crop
+            </div>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Wheat<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">
+                Wheat prefers loamy or clayey soil with good drainage. It grows best in cool
+                 climates with moderate rainfall and a temperature range of 15 to 25°C.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Paddy rice<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Paddy rice requires clayey or loamy soil with good water retention 
+                capabilities. It thrives in a tropical climate with temperatures around 25 to 35°C and ample rainfall. 
+                Rice cultivation typically involves flooded or irrigated fields to provide the necessary water conditions for the crop's growth.</P>
+            </li>
+           
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">sugarcane<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Sugarcane prefers well-drained, fertile soils such as alluvial or loamy soil. 
+                It thrives in tropical and subtropical regions with warm temperatures and abundant rainfall.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Cotton<i class="fa-solid fa-chevron-down"></i></a>
+            
+              <P class="para" style="display: none;">Cotton thrives in well-drained black soil with good moisture retention.
+                 It requires a warm climate with a temperature range of 21 to 30°C and a frost-free period.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Soybeans<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Soybeans are well-suited for black soil, which is highly fertile and has good moisture-holding capacity.
+                 They can also grow in other soil types such as loamy or sandy soil. Soybeans require a warm climate with temperatures ranging from 20 to 30°C
+                  and well-distributed rainfall. They are known for their nitrogen-fixing capabilities, enriching the soil and making them a valuable rotational crop.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Sunflower<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;"> Sunflowers thrive in well-drained soils, including black soil, which is rich in organic matter and nutrients.
+                 They can also grow well in loamy or sandy soil. Sunflowers require a temperate to subtropical climate with temperatures between 20 and 30°C and moderate rainfall.
+                 They are known for their ability to tolerate dry conditions and are often cultivated for their oil-rich seeds.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Maize (Corn)<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Maize, also known as corn, thrives in soils with good drainage and high fertility, such as black soil, which is rich in organic matter and minerals.
+                 Maize requires a warm climate with temperatures between 20 and 30°C and a well-distributed rainfall of 50 to 100 cm. It can also grow well in sandy loam and clay loam soils. Maize is an
+                  important staple crop in Kerala and is used for food and feed purposes. It is also a valuable source of industrial raw material for producing starch and ethanol.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Coconut palms<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;"> Coconut palms are well-suited for red soil, which is well-draining and allows for proper root aeration.
+                 They require a warm and humid climate with an annual temperature range of 20 to 32°C and a rainfall of 150 to 300 cm. Coastal areas with sandy 
+                 soil are ideal for coconut cultivation. Coconut palms are an important crop in Kerala, providing coconut oil, copra, and other products for both 
+                 domestic and international markets.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Banana<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;"> Bananas require well-drained soil with good fertility and a pH of 6-7, which can be found in black soil, 
+                red soil, and alluvial soil. Bananas prefer a warm and humid climate with temperatures between 25 to 30°C and rainfall of 100 to 150 cm per year. 
+                They are sensitive to waterlogging and strong winds. Bananas are an important crop in Kerala and are used for food and local handicrafts. They are 
+                also a source of potassium, fiber, and vitamins.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Rubber trees<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Rubber trees are primarily cultivated for their latex, which is used in the production of various products
+                 such as tires and gloves. While they prefer well-drained soil like laterite and clay loam soil, rubber trees can also grow in red soil with good
+                  drainage and a pH range of 5.5-6.5. They require a warm and humid climate with an annual rainfall of 2000-3000mm and are sensitive to drought.
+                   Rubber trees are also known to improve the fertility of the soil and reduce soil erosion, making them a valuable crop in Kerala..</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Beans<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Beans are leguminous crops that are suitable for a variety of soil types, including black soil, sandy loam,
+                 and clay loam. They require a warm climate with temperatures ranging between 18 to 27°C and moderate rainfall. Beans are known for their nitrogen-fixing 
+                 capabilities and can help improve soil fertility. They are commonly used as a source of protein in diets and are also grown for their edible pods and seeds.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Pepper<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;"> 
+                Pepper, also known as black pepper, is a tropical crop that grows well in warm and humid regions. It is typically cultivated 
+                in red or laterite soils that have good drainage and are rich in organic matter. Pepper requires a warm and humid climate with 
+                temperatures ranging from 20 to 35°C and well-distributed rainfall. It is commonly used as a spice and seasoning in food and is 
+                also known for its medicinal properties.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Turmeric<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Turmeric is a tropical crop that grows well in warm and humid regions. It is typically
+                 cultivated in sandy loam and clay loam soils that are well-drained and have good organic matter content. Turmeric requires
+                  a warm and humid climate with temperatures ranging from 20 to 35°C and well-distributed rainfall. It is commonly used as
+                   a spice in food and is also known for its medicinal properties.</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">Pineapples<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">Pineapples can grow well in a variety of soils including red soil and laterite soil,
+                 as well as sandy loam soils. The soil should be well-drained and have a pH range of 4.5 to 6.5. Pineapples require a warm 
+                 climate with temperatures ranging from 20 to 32°C and an annual rainfall of 1000 to 1500 mm</P>
+            </li>
+            <li class="item">
+              <a href="#" style="text-decoration: none;" class="paraHead">coffee<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">
+                Coffee mainly grown in red and laterite soils, which are acidic and rich in organic matter. 
+                The ideal altitude for coffee cultivation is between 600 to 1200 meters above sea level.
+                 Coffee plants require a moderate to high amount of rainfall, ranging from 1500 to 3000 mm 
+                 annually, and a temperature range of 18 to 28°C. The two main varieties of coffee grown in
+                  Kerala are Robusta and Arabica. The state produces high-quality coffee beans that are used in
+                   the coffee industry for roasting and blending to produce different types of coffee.
+                 </P>
+            </li>
+
+
+          </ul>
+        </li>
+        <li class="item">
+          <a href="#" style="text-decoration: none;" class="paraHead">About<i class="fa-solid fa-chevron-down"></i></a>
+             
+              <P class="para" style="display: none;">
+                The project Soil Classification using Deep Learning with CNN algorithm and MobileNetV2 model
+                 has proven to be a successful approach for predicting the type of soil and the crops that can
+                  be cultivated based on an input image.It empowers farmers to make informed decisions about
+                    crop selection and soil management. The primary objective of this website is to assist and support 
+                    newly emerging farmers and adopting new technologies in the field of agriculture.The website aims to
+                     provide accurate soil classification and crop prediction,
+                      thereby enabling farmers to optimize their agricultural practices and enhance overall productivity. 
+                      Our mission is to bridge the gap between technology and agriculture, facilitating the integration of 
+                      innovative solutions for sustainable farming practices.
+                 </P>
+        </li>
+        <li class="item">
+          <!-- <a href="#" style="text-decoration: none;" class="paraHead">Feedback<i class="fa-solid fa-chevron-down"></i></a> -->
+             
+              <P class="para" style="display: none;">
+                
+                 </P>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="navbar">
+
+
+    <i class="fa-solid fa-bars" id="sidebar-close"> </i>
+    <div class="heading">
+      <h1>SOIL SENSE</h1>
+    </div>
+
+
+
+  </nav>
+  <main class="main">
+
+    <div class="container">
+
+
+      <form class="form-horizontal" action="/submit" method="post" enctype="multipart/form-data">
+        <div class="card">
+          <div class="form-group">
+            <!-- <h1>SOIL SENSE</h1> -->
+            <h2>Choose the image to check</h2>
+            <br>
+            <!-- <label class="control-label col-sm-2" for="pwd">upload your image</label> -->
+            <div class="col-mm-10">
+              <!-- <input type="file"  class="form-control" placeholder="hour studied" name="my_image" id="pwd"> -->
+              <div class="image">
+
+                <input type="file" id="image-input" placeholder="hour studied" name="my_image" accept="image/*" />
+
+                <br><br>
+                <!-- <img id="selected-image" src="#" alt="Selected Image" style="display: none; max-width: 500px;" /> -->
+                {% if prediction %}
+                <img src="{{img_path}}" height="200px" width="200px" />
+                {% endif %}
+              </div>
+              {% if prediction %}
+              <h3>Result : {{prediction}}
+              </h3>
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-mm-offset-2 col-mm-10">
+              <button class="button" type="submit">submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </main>
+  <script>
+    const sidebar = document.querySelector(".sidebar");
+    const sidebarClose = document.querySelector("#sidebar-close");
+    const menu = document.querySelector(".menu-content");
+    const menuItems = document.querySelectorAll(".submenu-item");
+    const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+    const blackDown = document.querySelectorAll(".black-down");
+    const soilTypes = document.querySelectorAll(".soil-types");
+    const headPara = document.querySelectorAll(".paraHead");
+    const para = document.querySelectorAll(".para");
+
+    sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
+    menuItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        menu.classList.add("submenu-active");
+        item.classList.add("show-submenu");
+        menuItems.forEach((item2, index2) => {
+          if (index !== index2) {
+            item2.classList.remove("show-submenu");
+          }
+        });
+      });
+    });
+    headPara.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        if (para[index].style.display === 'none') {
+          para[index].style.display = 'block';
+        } else {
+          para[index].style.display = 'none';
+        }
+      });
+    })
+    subMenuTitles.forEach((title) => {
+      title.addEventListener("click", () => {
+        menu.classList.remove("submenu-active");
+      });
+    });
+
+    soilTypes.addEventListener("click", () => {
+      // document.getElementByClass("black-desc").style.display = "block";
+      soilTypes.classList.add("black-desc")
+    })
+
+
+
+  </script>
+</body>
+
+</html>

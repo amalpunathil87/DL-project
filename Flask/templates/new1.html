@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar Menu for Admin Dashboard | CodingNepal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .sidebar {
+      position: fixed;
+      height: 100%;
+      width: 260px;
+      background: #050e02;
+      padding: 20px 15px 15px 15px;
+      z-index: 99;
+    }
+
+    .logo {
+      font-size: 25px;
+      padding: 0 15px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .menu-content {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      margin-top: 40px;
+      overflow-y: scroll;
+    }
+
+    .menu-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-items {
+      height: 100%;
+      width: 100%;
+      list-style: none;
+      transition: all 0.4s ease;
+    }
+
+    .submenu-active .menu-items {
+      transform: translateX(-56%);
+    }
+
+    
+
+
+
+    .menu-title {
+      color: #fff;
+      font-size: 14px;
+      padding: 15px 20px;
+    }
+
+    .item a,
+    .submenu-item {
+      padding: 16px;
+      display: inline-block;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .item i {
+      font-size: 12px;
+    }
+
+    .item a:hover,
+    .submenu-item:hover,
+    .soil-types:hover,
+    .submenu .menu-title:hover {
+      background: rgba(13, 62, 43, 0.858);
+    }
+
+    .submenu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .soil-types{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+      padding: 16px;
+      display: inline-block;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .submenu {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      right: calc(-100% - 28px);
+      height: calc(100% + 100vh);
+      background: #091805;
+      display: none;
+    }
+
+    .show-submenu~.submenu {
+      display: block;
+    }
+
+    .submenu .menu-title {
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .submenu .menu-title i {
+      margin-right: 10px;
+    }
+
+    .soil-description{
+      display: none;
+    }
+
+    .navbar,
+    .main {
+      left: 260px;
+      width: calc(100% - 260px);
+      transition: all 0.5s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.close~.navbar,
+    .sidebar.close~.main {
+      left: 0;
+      width: 100%;
+    }
+
+    .navbar {
+      position: fixed;
+      color: rgb(255, 250, 250);
+      padding: 15px 20px;
+      font-size: 25px;
+      background: #0e2207;
+      cursor: pointer;
+      height: 80px;
+      display: flex;
+
+    }
+
+    .navbar #sidebar-close {
+      cursor: pointer;
+    }
+
+    .heading {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .main {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      z-index: 100;
+      /* background: #162739; */
+      background-image: url('/static/image/bg.jpg');
+      background-size: cover;
+
+    }
+
+    .main h1 {
+      color: #11101d;
+      font-size: 40px;
+      text-align: center;
+    }
+
+    /* body {
+    background-image: url('/static/image/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+    h1 {
+      font-weight: bold;
+      color: rgb(250, 250, 246);
+      font-size: 40px;
+      /* padding-left: 450px;
+    position: absolute;
+    display: flex;
+    justify-content: center; */
+
+    }
+
+    h2 {
+      color: aliceblue;
+    }
+
+    p {
+      font-size: 15px;
+      /* font-weight: bold;
+      font-style: normal;
+      color: beige; */
+      display: flex;
+      color: #fff;
+
+    }
+
+    input {
+      font-size: 20px;
+      font-weight: 200;
+      color: rgb(129, 118, 118);
+      font-style: normal;
+    }
+
+    .card {
+      background: rgba(13, 62, 43, 0.858);
+      width: 800px;
+      height: 600px;
+      gap: 40px;
+      padding: 0px 0px 0px 30px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    .card p {
+      font-size: 30px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 24px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #12300a;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 9px rgb(78, 59, 73);
+    }
+
+    .button:hover {
+      background-color: #020e04
+    }
+
+    .button:active {
+      background-color: #040f0a;
+      box-shadow: 0 5px rgb(7, 22, 5);
+      transform: translateY(4px);
+    }
+
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h3 {
+      padding-top: 30px;
+      color: #fff;
+      width: 800px;
+      word-wrap: break-word;
+      text-overflow: hidden;
+    }
+
+
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+    }
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+</head>
+
+<body>
+  <nav class="sidebar">
+    <a href="#" class="logo">Soil Sense</a>
+    <div class="menu-content">
+      <ul class="menu-items">
+        <li class="item">
+          <div class="submenu-item">
+            <span>Soil Type</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Soil Type
+            </div>
+            <li class="item"> 
+              <li>
+             
+              <!-- <div class="soil-types">
+                <span>Black Soil</span>
+                <i class="fa-solid fa-chevron-down black-down"></i>
+                <div class="soil-description black-desc">
+                  <P>Black soils are mineral soils which have a black surface horizon, enriched with organic carbon that is
+                    at least 25 cm deep. Two categories of black soils (1st and 2nd categories) are recognized. The
+                    categories are distinguished to recognise the higher value, and thus greater need
+                    for protection, of some soils (Category 1), while still including a wider range of soils within the
+                    overall Black Soil definition (Category 2)</P>
+                </div>
+              </div> -->
+             
+              
+              <a href="#" >Black Soil</a>
+               <P>Black soils are mineral soils which have a black surface horizon, enriched with organic carbon that is
+                at least 25 cm deep. Two categories of black soils (1st and 2nd categories) are recognized. The
+                categories are distinguished to recognise the higher value, and thus greater need
+                for protection, of some soils (Category 1), while still including a wider range of soils within the
+                overall Black Soil definition (Category 2)</P> 
+            </li>
+            <li class="item">
+              <a href="#">Red soil</a>
+            </li>
+            <li class="item">
+              <a href="#">Alluvial Soil</a>
+            </li>
+            <li class="item">
+              <a href="#">Clay Soil</a>
+            </li>
+          </ul>
+        </li>
+        <li class="item">
+          <div class="submenu-item">
+            <span>Crop </span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Crop
+            </div>
+            <li class="item">
+              <a href="#">wheat</a>
+            </li>
+            <!-- <li class="item">
+              <a href="#">Second sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">Second sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">Second sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">Second sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">Second sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">Second sublink</a>
+            </li> -->
+
+
+
+          </ul>
+        </li>
+        <li class="item">
+          <a href="#">About</a>
+        </li>
+        <li class="item">
+          <a href="#">Feedback</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="navbar">
+
+
+    <i class="fa-solid fa-bars" id="sidebar-close"> </i>
+    <div class="heading">
+      <h1>SOIL SENSE</h1>
+    </div>
+
+
+
+  </nav>
+  <main class="main">
+
+    <div class="container">
+
+
+      <form class="form-horizontal" action="/submit" method="post" enctype="multipart/form-data">
+        <div class="card">
+          <div class="form-group">
+            <!-- <h1>SOIL SENSE</h1> -->
+            <h2>Choose the image to check</h2>
+            <br>
+            <!-- <label class="control-label col-sm-2" for="pwd">upload your image</label> -->
+            <div class="col-mm-10">
+              <!-- <input type="file"  class="form-control" placeholder="hour studied" name="my_image" id="pwd"> -->
+              <div class="image">
+
+                <input type="file" id="image-input" placeholder="hour studied" name="my_image" accept="image/*" />
+               
+                <br><br>
+                <!-- <img id="selected-image" src="#" alt="Selected Image" style="display: none; max-width: 500px;" /> -->
+                {% if prediction %}
+                <img src="{{img_path}}" height="200px" width="200px" />
+                {% endif %}
+              </div>
+              {% if prediction %}
+                <h3>Result : {{prediction}}
+                </h3>
+                {% endif %}
+              
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-mm-offset-2 col-mm-10">
+              <button class="button" type="submit">submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </main>
+  <script>
+    const sidebar = document.querySelector(".sidebar");
+    const sidebarClose = document.querySelector("#sidebar-close");
+    const menu = document.querySelector(".menu-content");
+    const menuItems = document.querySelectorAll(".submenu-item");
+    const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+    const blackDown = document.querySelectorAll(".black-down");
+    const soilTypes = document.querySelectorAll(".soil-types");
+
+    sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
+    menuItems.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        menu.classList.add("submenu-active");
+        item.classList.add("show-submenu");
+        menuItems.forEach((item2, index2) => {
+          if (index !== index2) {
+            item2.classList.remove("show-submenu");
+          }
+        });
+      });
+    });
+    subMenuTitles.forEach((title) => {
+      title.addEventListener("click", () => {
+        menu.classList.remove("submenu-active");
+      });
+    });
+   
+    soilTypes.addEventListener("click", () => {
+      // document.getElementByClass("black-desc").style.display = "block";
+      soilTypes.classList.add("black-desc")
+    })
+
+    
+    
+  </script>
+</body>
+
+</html>
